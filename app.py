@@ -39,60 +39,65 @@ def index():
 
 @app.route('/register', methods = ["POST", "GET"])
 def register():
-    # connect to the database
-    users = mongo.db.users
-    # insert new data
     if request.method == "GET":
         return render_template('index.html')
     else:
-        # store the username as a variable
+        # store the form data as variables
         username = request.form["username"]
         password = request.form["password"]
-        first = request.form["fname"]
-        last = request.form["lname"]
-        # print(username)
+        email = request.form["email"]
         # connect to mongo users collection
         users = mongo.db.users
         # do a query for the user in the collection
         query = list(users.find({"username": username}))
-        print(query)
-        print(len(query))
-        # check if the query returned anything we will return "you already have an account"
+        # check if the query returned anything : does the username exist?
         if len(query) > 0:
-            return "You already have an account. Try logging in"
+            # return redirect('/')
+            session["error"] = "username not available. Already exists"
+            return "<a href='/'>redirect</a>"
         else:
             if password == request.form["confirm"]: 
                 password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-                users.insert({"username": username, "password": password, "first_name": first, "last_name": last})
-                session["name"] = username
-                return "congrats! you have logged in"
+                users.insert({"username": username, "password": password, "email": email})
+                session["username"] = username
+                # return redirect(url_for("login"))
+                return "<a href='/login'>login page</a>"
             else: 
-                return "passwords do not match"
+                session["error"] = "passwords do not match"
+                # return redirect('/')
+                return "<a href='/'>redirect</a>"
 
-
-@app.route('/login',  methods = ["POST", "GET"])
+#HTML PAGE ROUTES
+@app.route("/login")
 def login():
+    return render_template("login.html")
+
+@app.route('/profile')
+def profile():
+    return render_template("profile.html")
+
+
+@app.route('/logon',  methods = ["POST", "GET"])
+def logon():
     users = mongo.db.users 
     username = request.form["username"]
     password = request.form["password"]
-    # print(username)
     # do a query for the user in the collection
     query = list(users.find({"username": username}))
-    print(query)
-    print(len(query))
-    if len(query)>0:
+    if len(query) > 0:
         user_pw = list(users.find({"username": username}))[0]["password"]
         if bcrypt.checkpw(password.encode("utf-8"), user_pw):
-            return redirect(url_for("profile"))
+            # return redirect(url_for("profile"))
+            return "<a href='/profile'>Profile</a>"
         else: 
-            return "incorrect password"
-    return "username not found"
+            session["error"] = "incorrect password"
+            return redirect('/')
+    session["error"] = "invalid username"
+    # return redirect('/')
+    return "<a href='/'>Go Home</a>"
 
 
 @app.route('/logout')
 def logout():
     return ""
 
-@app.route('/profile')
-def profile():
-    return render_template("profile.html")

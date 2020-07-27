@@ -2,21 +2,49 @@
     <head>
         <title>Personal Finance Planner</title>
         <link rel="stylesheet" type="text/css" href="static/css/style.css?q={{time}}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://use.fontawesome.com/043418245c.js"></script>
     </head>
-    <body>
-        <form action = "/register" method = "POST">
-            <label for="fname">First name:</label><br>
-			<input type="text" id="fname" name="fname"><br>
-			<label for="lname">Last name:</label><br>
-			<input type="text" id="lname" name="lname"><br><br>
-            <label for="fname">username:</label><br>
-			<input type="text" name= "username"><br>
-			<label for="lname">password:</label><br>
-            <input type="password" name="password"><br><br>
-            <label for="lname">confirm password:</label><br>
-            <input type="password" name="confirm"><br><br>
-			<input type="submit" value="Submit">
-        </form> 
+    <body style="background-color:#2b3137">
+        <nav class="navbar navbar-dark bg-dark justify-content-right">
+            <a class="navbar-brand" href="#"><i class="fa fa-usd" aria-hidden="true"></i> <i class="fa fa-credit-card" aria-hidden="true"></i> Personal Finance</a>
+            <div class="flex-row-reverse">
+                <a><button class="btn btn-primary my-2 my-sm-0">Sign Up</button></a>
+                <a href="/login"><button class="btn btn-primary my-2 my-sm-0">Login</button></a>
+            </div>
+        </nav>
 
+        <br>
+        <div class="col-8 offset-2 col-md-4 offset-md-6 signup">
+            {% if session["error"]%}
+                <code><small>{{session["error"]}}</small></code>
+            {% endif %}
+            <form action="/register" method="POST">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="xxx@gmail.com">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" aria-describedby="nameHelp" placeholder="ex. john123">
+                    <small id="nameHelp" class="form-text text-muted">6-12 characters consisting of numbers and letters.</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" aria-describedby="pwHelp" name="password" placeholder="Password">
+                    <small id="pwHelp" class="form-text text-muted">Passwords will be encrypted.</small>
+                </div>
+                <div class="form-group">
+                    <label for="confirm">Confirm Password</label>
+                    <input type="password" class="form-control" name="confirm" placeholder="Password Again">
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </body>
 </html>
