@@ -8,6 +8,7 @@ import os
 import bcrypt
 from datetime import datetime
 from flask import redirect
+import model
 
 # -- Initialization section --
 app = Flask(__name__)
@@ -60,12 +61,12 @@ def register():
                 password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
                 users.insert({"username": username, "password": password, "email": email})
                 session["username"] = username
-                # return redirect(url_for("login"))
-                return "<a href='/login'>login page</a>"
+                return redirect(url_for("login"))
+                #return "<a href='/login'>login page</a>"
             else: 
                 session["error"] = "passwords do not match"
-                # return redirect('/')
-                return "<a href='/'>redirect</a>"
+                return redirect('/')
+                #return "<a href='/'>redirect</a>"
 
 #HTML PAGE ROUTES
 @app.route("/login")
@@ -74,7 +75,7 @@ def login():
 
 @app.route('/profile')
 def profile():
-    return render_template("profile.html")
+    return render_template("profile.html", time=datetime.now())
 
 
 @app.route('/logon',  methods = ["POST", "GET"])
@@ -101,3 +102,9 @@ def logon():
 def logout():
     return ""
 
+@app.route("/savings", methods = ["POST", "GET"])
+def saving():
+    income = request.form["income"] 
+    goal = request.form["goal"]
+    age = request.form["age"]
+    return render_template("profile.html", response = model.calc_saving(income,goal,age), time=datetime.now())
