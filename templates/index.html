@@ -4,12 +4,19 @@
         <link rel="stylesheet" type="text/css" href="static/css/style.css?q={{time}}">
     </head>
     <body>
-	    <!-- <div class="event-list">
-	        <ul>
-	            {% for event in events %}
-	                <li>{{ event.event }} - {{ event.date }}</li>
-	            {% endfor %}
-	        </ul>
-	    </div> -->
+        <form action = "/register" method = "POST">
+            <label for="fname">First name:</label><br>
+			<input type="text" id="fname" name="fname"><br>
+			<label for="lname">Last name:</label><br>
+			<input type="text" id="lname" name="lname"><br><br>
+            <label for="fname">username:</label><br>
+			<input type="text" name= "username"><br>
+			<label for="lname">password:</label><br>
+            <input type="password" name="password"><br><br>
+            <label for="lname">confirm password:</label><br>
+            <input type="password" name="confirm"><br><br>
+			<input type="submit" value="Submit">
+        </form> 
+
     </body>
 </html>
