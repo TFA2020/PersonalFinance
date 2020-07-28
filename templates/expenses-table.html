@@ -10,7 +10,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="https://use.fontawesome.com/043418245c.js"></script>
     </head>
-
     <body style="background-color:#2b3137">
         <nav class="navbar navbar-dark bg-dark justify-content-right">
             <a class="navbar-brand" href="#"><i class="fa fa-usd" aria-hidden="true"></i> <i class="fa fa-credit-card" aria-hidden="true"></i> Personal Finance</a>
@@ -23,32 +22,18 @@
                 {% endif %}
             </div>
         </nav>
+
         <br>
-        <div class="heading">
-            <span class="fa-stack fa-lg">
-                  <i class="fa fa-circle fa-stack-2x fa-inverse"></i>
-                  <i class="fa fa-usd fa-stack-1x"></i>
-            </span>
-            <h4>Sign in to Personal Finance</h4>
-        </div>
-        
-        <div class="form-login">
-            {% if session["error"] %}
-                <code><small>{{session["error"]}}</small></code>
-            {% endif %}
-            <form action = "/sign_in" method = "POST"> 
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" aria-describedby="username" placeholder="ex. john123">
-                    <small id="username" class="form-text text-muted">Click Sign Up if you do not have an username.</small>
-                </div>
-                <div class="form-group">
-                    <label for="username">Password</label>
-                    <input type="password" class="form-control" name="password" aria-describedby="password" placeholder="your password">
-                    <small id="password" class="form-text text-muted">We currently do not have a feature to reset password.</small>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+
+        <div class = "row">
+            <div class="vertical-menu col-md-3 offset-md-1">
+                <a href="/profile">Profile</a>
+                <a href="/calculator">Savings Calculator</a>
+                <a href="/expenses_form">Submit Expenses</a>
+                <a href="/expenses_table" class="active">View Expenses</a>
+                <a href="#">Link 4</a>
+            </div>
         </div>
     </body>
-</html>
+
+    </html>

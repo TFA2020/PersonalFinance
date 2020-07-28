@@ -46,7 +46,23 @@ def profile():
     return render_template("profile.html", time=datetime.now())
 
 
-# CONNECT TO DB, ADD DATA
+@app.route("/calculator")
+def calculator():
+    return render_template("calculator.html", time=datetime.now())
+
+
+@app.route("/expenses_form")
+def expenses_form():
+    return render_template("expenses-form.html", time=datetime.now())
+
+
+@app.route("/expenses_table")
+def expenses_table():
+    return render_template("expenses-table.html", time=datetime.now())
+
+
+# AUTHENTICATION PROCESS
+
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
@@ -70,7 +86,7 @@ def register():
             # return redirect('/')
         if password == request.form["confirm"]: 
             password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-            users.insert({"username": username, "password": password, "email": email, "item":""})
+            users.insert({"username": username, "password": password, "email": email, "item":{}, "total_expense" : 0})
             session["username"] = username
             return "<a href='/login'>redirect to login</a>"
             # return redirect(url_for("login"))
@@ -109,6 +125,8 @@ def logout():
     # return redirect('/')
 
 
+# USER FEATURES
+
 @app.route("/savings", methods=["POST", "GET"])
 def saving():
     income = request.form["income"]
@@ -117,17 +135,18 @@ def saving():
     response = model.calc_saving(income, goal, age)
     return render_template("profile.html", response=response, time=datetime.now())
 
-@app.route("/your_expenses")
-def expense_table():
-    return render_template("expenses.html", time=datetime.now())
 
 @app.route("/for_expenses", methods=["POST", "GET"])
 def for_expense():
     response = dict(request.form)
     items = {}
     users = mongo.db.users
-    user = users.find({'username': session['username']})
-    print(user)
     for i in range(1, int(len(response)/2+1)):
-        items["item"+str(i)] = (request.form["item"+str(i)], request.form["price"+str(i)])
-    return items
+        item = request.form["item"+str(i)]
+        price = float(request.form["price"+str(i)])
+        items[item] = price
+    myquery = {"username": session['username']}
+    newvalues = {"$set": {"item": items}}
+    users.update_one(myquery, newvalues)
+    # return redirect(url_for('expense_table'))
+    return "<a href='/expense_table'>redirect to expense table</a>"
