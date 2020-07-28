@@ -22,30 +22,42 @@
         </nav>
 
         <br>
-        <div class="col-8 offset-2 col-md-4 offset-md-6 form-design">
-            {% if session["error"] %}
-                <code><small>{{session["error"]}}</small></code>
-            {% endif %}
-            <form action="/savings" method="POST">
-                <div class="form-group">
-                    <label for="income">Monthly Income</label>
-                    <input type="number" class="form-control" name="income" aria-describedby="emailHelp" placeholder="1234.56">
-                    <small id="emailHelp" class="form-text text-muted">Average Monthly income</small>
-                </div>
-                <div class="form-group">
-                    <label for="goal">Savings Goal</label>
-                    <input type="number" class="form-control" name="goal" aria-describedby="nameHelp" placeholder="1234.56">
-                    <small id="nameHelp" class="form-text text-muted">How much you would like to save</small>
-                </div>
-                <div class="form-group">
-                    <label for="age">Age</label>
-                    <input type="number" class="form-control" aria-describedby="pwHelp" name="age" placeholder="24">
-                    <small id="pwHelp" class="form-text text-muted">How old you are.</small>
-                </div>
+
+        <div class = "row">
+            <div class="vertical-menu col-md-3 offset-md-1">
+                <a href="/profile" class="active">Home</a>
+                <a href="/your_expenses">Submit Expenses</a>
+                <a href="/expense_table">View Expenses</a>
+                <a href="#">Link 3</a>
+                <a href="#">Link 4</a>
+            </div>
+
+
+            <div class="col-8 offset-md-1 col-md-4 form-design">
+                {% if session["error"] %}
+                    <code><small>{{session["error"]}}</small></code>
+                {% endif %}
+                <form action="/savings" method="POST">
+                    <div class="form-group">
+                        <label for="income">Monthly Income</label>
+                        <input type="number" class="form-control" name="income" aria-describedby="emailHelp" placeholder="1234.56">
+                        <small id="emailHelp" class="form-text text-muted">Average Monthly income</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="goal">Savings Goal</label>
+                        <input type="number" class="form-control" name="goal" aria-describedby="nameHelp" placeholder="1234.56">
+                        <small id="nameHelp" class="form-text text-muted">How much you would like to save</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" class="form-control" aria-describedby="pwHelp" name="age" placeholder="24">
+                        <small id="pwHelp" class="form-text text-muted">How old you are.</small>
+                    </div>
             
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <p>{{response}}</p>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <p>{{response}}</p>
+            </div>
         </div>
     </body>
     </html>

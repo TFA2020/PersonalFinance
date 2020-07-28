@@ -2,14 +2,72 @@
     <head>
         <title>Personal Finance Planner</title>
         <link rel="stylesheet" type="text/css" href="static/css/style.css?q={{time}}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://use.fontawesome.com/043418245c.js"></script>
     </head>
-    <body>
-	    <!-- <div class="event-list">
-	        <ul>
-	            {% for event in events %}
-	                <li>{{ event.event }} - {{ event.date }}</li>
-	            {% endfor %}
-	        </ul>
-	    </div> -->
+    <body style="background-color:#2b3137">
+        <nav class="navbar navbar-dark bg-dark justify-content-right">
+            <a class="navbar-brand" href="#"><i class="fa fa-usd" aria-hidden="true"></i> <i class="fa fa-credit-card" aria-hidden="true"></i> Personal Finance</a>
+            <div class="flex-row-reverse">
+                {% if session["username"] %}
+                    <a href="/logout"><button class="btn btn-primary my-sm-0">Log Out</button></a>
+                {% else %}
+                    <a href="/"><button class="btn btn-primary my-sm-0">Sign Up</button></a>
+                    <a href="/login"><button class="btn btn-primary my-sm-0">Sign In</button></a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <br>
+
+        <div class = "row">
+            <div class="vertical-menu col-md-3 offset-md-1">
+                <a href="/profile" class="active">Home</a>
+                <a href="/your_expenses">Submit Expenses</a>
+                <a href="/expense_table">View Expenses</a>
+                <a href="#">Link 3</a>
+                <a href="#">Link 4</a>
+            </div>
+
+
+            <div class="col-8 offset-md-1 col-md-4 form-design">
+                {% if session["error"] %}
+                    <code><small>{{session["error"]}}</small></code>
+                {% endif %}
+
+                <form action="/for_expenses" method="POST">
+    
+                    <div class="form-group">
+                        <label for="item1">Item 1</label>
+                        <div class= "row">
+                        <input type="text" class="form-control col-6" name="item1">
+                        <input type="number" class="form-control col-6" name="price1" aria-describedby="emailHelp" placeholder="1234.56">
+                        </div>
+                    </div>
+
+                   <div class="form-group">
+                        <label for="item2">Item 2</label>
+                        <div class= "row">
+                        <input type="text" class="form-control col-6" name="item2">
+                        <input type="number" class="form-control col-6" name="price2" aria-describedby="emailHelp" placeholder="1234.56">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item3">Item 3</label>
+                        <div class= "row">
+                        <input type="text" class="form-control col-6" name="item3">
+                        <input type="number" class="form-control col-6" name="price3" aria-describedby="emailHelp" placeholder="1234.56">
+                        </div>
+                    </div>
+            
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <p>{{response}}</p>
+            </div>
+        </div>
     </body>
-</html>
+    </html>

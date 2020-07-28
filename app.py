@@ -70,7 +70,7 @@ def register():
             # return redirect('/')
         if password == request.form["confirm"]: 
             password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-            users.insert({"username": username, "password": password, "email": email})
+            users.insert({"username": username, "password": password, "email": email, "item":""})
             session["username"] = username
             return "<a href='/login'>redirect to login</a>"
             # return redirect(url_for("login"))
@@ -116,3 +116,18 @@ def saving():
     age = request.form["age"]
     response = model.calc_saving(income, goal, age)
     return render_template("profile.html", response=response, time=datetime.now())
+
+@app.route("/your_expenses")
+def expense_table():
+    return render_template("expenses.html", time=datetime.now())
+
+@app.route("/for_expenses", methods=["POST", "GET"])
+def for_expense():
+    response = dict(request.form)
+    items = {}
+    users = mongo.db.users
+    user = users.find({'username': session['username']})
+    print(user)
+    for i in range(1, int(len(response)/2+1)):
+        items["item"+str(i)] = (request.form["item"+str(i)], request.form["price"+str(i)])
+    return items

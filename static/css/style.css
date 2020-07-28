@@ -1,4 +1,4 @@
-.form-design, .form-login{
+.form-design, .form-login {
     border : 1px solid grey;
     border-radius: 10px;
     background-color: white;
@@ -18,4 +18,26 @@
 .heading > :not(span){
     color: white;
     margin: 10px;
+}
+
+.vertical-menu {
+    padding: 15px;
+    margin: 10px;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #4CAF50;
+  color: white;
 }
