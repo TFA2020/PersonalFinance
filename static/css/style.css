@@ -1,7 +1,21 @@
-.signup{
+.form-design, .form-login{
     border : 1px solid grey;
     border-radius: 10px;
     background-color: white;
     padding: 15px;
     margin-top: 10px;
+}
+
+.form-login, .heading{
+    width: 400px;
+    margin : 30px auto;
+}
+
+.heading{
+    text-align: center;
+}
+
+.heading > :not(span){
+    color: white;
+    margin: 10px;
 }

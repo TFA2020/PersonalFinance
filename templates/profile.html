@@ -12,14 +12,18 @@
         <nav class="navbar navbar-dark bg-dark justify-content-right">
             <a class="navbar-brand" href="#"><i class="fa fa-usd" aria-hidden="true"></i> <i class="fa fa-credit-card" aria-hidden="true"></i> Personal Finance</a>
             <div class="flex-row-reverse">
-                <a><button class="btn btn-primary my-2 my-sm-0">Sign Up</button></a>
-                <a href="/login"><button class="btn btn-primary my-2 my-sm-0">Login</button></a>
+                {% if session["username"] %}
+                    <a href="/logout"><button class="btn btn-primary my-sm-0">Log Out</button></a>
+                {% else %}
+                    <a href="/"><button class="btn btn-primary my-sm-0">Sign Up</button></a>
+                    <a href="/login"><button class="btn btn-primary my-sm-0">Sign In</button></a>
+                {% endif %}
             </div>
         </nav>
 
         <br>
-        <div class="col-8 offset-2 col-md-4 offset-md-6 signup">
-            {% if session["error"]%}
+        <div class="col-8 offset-2 col-md-4 offset-md-6 form-design">
+            {% if session["error"] %}
                 <code><small>{{session["error"]}}</small></code>
             {% endif %}
             <form action="/savings" method="POST">
