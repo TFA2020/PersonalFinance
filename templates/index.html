@@ -24,34 +24,41 @@
         </nav>
 
         <br>
-        <div class="col-8 offset-2 col-md-4 offset-md-6 form-design">
-            {% if session["error"] %}
-                <code><small>{{session["error"]}}</small></code>
-            {% endif %}
-            <form action="/register" method="POST">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="xxx@gmail.com">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 offset-md-1 center-content">
+                    <h1>Welcome to Personal Finance Planner</h1>
                 </div>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" aria-describedby="nameHelp" placeholder="ex. john123">
-                    <small id="nameHelp" class="form-text text-muted">6-12 characters consisting of numbers and letters.</small>
+                <div class="col-md-5 form-design">
+                    {% if session["error"] %}
+                        <code><small>{{session["error"]}}</small></code>
+                    {% endif %}
+                    <form action="/register" method="POST">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="xxx@gmail.com">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" name="username" aria-describedby="nameHelp" placeholder="ex. john123">
+                            <small id="nameHelp" class="form-text text-muted">6-12 characters consisting of numbers and letters.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" aria-describedby="pwHelp" name="password" placeholder="Password">
+                            <small id="pwHelp" class="form-text text-muted">Passwords will be encrypted.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm">Confirm Password</label>
+                            <input type="password" class="form-control" aria-describedby="pw2Help" name="confirm" placeholder="Password Again">
+                            <small id="pw2Help" class="form-text text-muted">Passwords must match.</small>
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" aria-describedby="pwHelp" name="password" placeholder="Password">
-                    <small id="pwHelp" class="form-text text-muted">Passwords will be encrypted.</small>
-                </div>
-                <div class="form-group">
-                    <label for="confirm">Confirm Password</label>
-                    <input type="password" class="form-control" aria-describedby="pw2Help" name="confirm" placeholder="Password Again">
-                    <small id="pw2Help" class="form-text text-muted">Passwords must match.</small>
-                </div>
-            
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            </div>
         </div>
     </body>
 </html>

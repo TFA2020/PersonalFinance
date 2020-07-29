@@ -58,14 +58,20 @@ def expenses_form():
 
 @app.route("/expenses_table")
 def expenses_table():
+    # connect to mongo
     users = mongo.db.users
+    # find user based on username
     user = users.find({"username":session["username"]})
     user = list(user)[0]
+    # retrieve data from mongo
     expense = user["expense"]
+    total = user["total_expense"]
+    # separate expense dictionary into two lists
     items = list(expense.keys())
+    # comment 1
     prices = list(expense.values())
-    print(prices, items)
-    return render_template("expenses-table.html", prices=prices, items=items, time=datetime.now())
+    # print(prices, items)
+    return render_template("expenses-table.html", prices=prices, items=items, total_expense= total, time=datetime.now())
 
 
 # AUTHENTICATION PROCESS
@@ -136,11 +142,32 @@ def logout():
 
 @app.route("/savings", methods=["POST", "GET"])
 def saving():
+    # print(dict(request.form))
+    users = mongo.db.users
+    user = list(users.find({"username" : session["username"]}))[0]
     income = request.form["income"]
     goal = request.form["goal"]
-    age = request.form["age"]
-    response = model.calc_saving(income, goal, age)
-    return render_template("profile.html", response=response, time=datetime.now())
+    time = request.form["time"]
+    balance = request.form["balance"]
+    # include is either "YES" or "NO"
+    include = request.form['includeExpense']
+    expenses = user["total_expense"]
+    if include == "YES":
+        response = model.calc_saving(income, goal, time, balance, expenses)
+    else:
+        response = model.calc_saving(income, goal, time, balance)
+
+    myquery = {"username": session['username']}
+    changes = [
+        {"$set": {"income": income}},
+        {"$set": {"time": time}},
+        {"$set": {"response": response}},
+        {"$set": {"Current Saving Balance": balance}},
+        {"$set": {"Savings Goal": goal}}
+    ]
+    for change in changes:
+        users.update_one(myquery, change)
+    return render_template("profile.html", time=datetime.now())
 
 
 @app.route("/for_expenses", methods=["POST", "GET"])
@@ -155,7 +182,7 @@ def for_expense():
         items[item] = price
     myquery = {"username": session['username']}
     newItems = {"$set": {"expense": items}}
-    newExpenseTotal = {"$set": {"total_expense": sum(items.values())}}
+    newExpenseTotal = {"$set": {"total_expense": round(sum(items.values()), 2)}}
     users.update_one(myquery, newItems)
     users.update_one(myquery, newExpenseTotal)
     # return redirect(url_for('expense_table'))

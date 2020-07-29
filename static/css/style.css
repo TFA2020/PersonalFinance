@@ -6,6 +6,12 @@
     margin-top: 10px;
 }
 
+.center-content > *{
+    position: relative;
+    top: 40%;
+    color: white;
+}
+
 .form-login, .heading{
     width: 400px;
     margin : 30px auto;
