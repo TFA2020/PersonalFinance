@@ -33,17 +33,21 @@
                 <a href="/expenses_table">View Monthly Expenses</a>
             </div>
             <div class = "col-md-5 form-design offset-md-1">
-                {%if response%}
-                
-                <p>Your income: {{response.income}}</p>
-                <p>Your savings goal: {{response.goal}}</p>
-                <p>Your current savings balance: {{response.balance}}</p>
-                <p>You wanted to save for: {{response.time}} years</p>
-                <p>Based on the provided information, {{response.result}}</p>
-                {%endif%}
+                <h5>Hello, {{session["username"]}}</h5>
+                {% if response %}
+                    <p>Your income: ${{response.income}}</p>
+                    <p>Your savings goal: ${{response.goal}}</p>
+                    <p>Your current savings balance: ${{response.balance}}</p>
+                    <p>You wanted to save for: {{response.time}} years</p>
+                    <p>Your current monthly total expense: ${{response.expenses}}
+                    <strong><p>Based on the provided information, {{response.result}}</p></strong>
+                {% else %}
+                    <p>Want to calculate your monthly savings and allowance ?</p>
+                    <p>Click <a href='/calculator'>here</a> or select the Savings Calculator from the menu</p>
+                {% endif %}
+
             </div>
         </div>
         </div>
     </body>
-
-    </html>
+</html>

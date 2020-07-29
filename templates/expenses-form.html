@@ -23,50 +23,57 @@
                 {% endif %}
             </div>
         </nav>
-
         <br>
+
         <div class= "container">
-        <div class = "row">
-            <div class="vertical-menu col-md-4 offset-md-1">
-                <a href="/profile">Profile</a>
-                <a href="/calculator">Savings Calculator</a>
-                <a href="/expenses_form" class="active">Submit Monthly Expenses</a>
-                <a href="/expenses_table">View Monthly Expenses</a>
+            <div class = "row">
+
+                <!-- Menu -->
+                <div class="vertical-menu col-md-4 offset-md-1">
+                    <a href="/profile">Profile</a>
+                    <a href="/calculator">Savings Calculator</a>
+                    <a href="/expenses_form" class="active">Submit Monthly Expenses</a>
+                    <a href="/expenses_table">View Monthly Expenses</a>
+                </div>
+
+                <!-- Form -->
+                <div class="col-md-5 offset-md-1 form-design">
+                    {% if session["error"] %}
+                        <code><small>{{session["error"]}}</small></code>
+                    {% endif %}
+
+                    <form action="/for_expenses" method="POST">
+                        <button type="button" id="addExpense"  class="btn btn-primary">Add Expense</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
-
-            <div class="col-md-5 offset-md-1 form-design">
-                {% if session["error"] %}
-                    <code><small>{{session["error"]}}</small></code>
-                {% endif %}
-
-                <form action="/for_expenses" method="POST">
-                    <button type="button" id="addExpense"  class="btn btn-primary">Add Expense</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-
-                <p>{{response}}</p>
-            </div>
-        </div>
         </div>
     </body>
+
+    <!-- JQuery Script -->
     <script>
         $(document).ready(function() {
             var count = 1;
+            //When the page is loaded, display 5 rows of input (5 items default)
             for (var i = 0; i < 5; i++ ){
                 addInput();
                 count++;
             }
+
+            //When the "add expense" button is clicked, add a new row of input boxes
             $('#addExpense').click(function(){
                 addInput();
                 count++;
             })
 
+            //Watch for p tags (containing the X icon) that are clicked
             $('form').on('click', 'p', function(){
                 var id = $(this).attr("id");
                 $("#item" + id).remove()
-                //alert(id)
             })
            
+            //code to create new rows of input with unique names
             function addInput(){
                code = `<div class="form-group" id="item${count}"><div class= "row"><div class="col-10"><div class="row">`
                 + `<div class="col-6"><input type="text" class="form-control" name="item${count}" required>`
@@ -78,5 +85,4 @@
             }
         })
     </script>
-
 </html>

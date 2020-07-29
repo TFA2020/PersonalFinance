@@ -52,14 +52,16 @@ def profile():
         result = user["response"]
         balance = user["Current Saving Balance"]
         time = user["time"]
+        expenses = user["total_expense"]
         saving_response = {
-            "income":income,
+            "income": income,
             "goal": goal,
             "result": result,
             "balance": balance,
-            "time":time
+            "time": time,
+            "expenses": expenses
         }
-        print(saving_response)
+        # print(saving_response)
         return render_template("profile.html", response=saving_response, time=datetime.now())
     else:
         return render_template("profile.html", time=datetime.now())
@@ -164,14 +166,13 @@ def saving():
     # print(dict(request.form))
     users = mongo.db.users
     user = list(users.find({"username" : session["username"]}))[0]
-
+    expenses = user["total_expense"]
     income = request.form["income"]
     goal = request.form["goal"]
     time = request.form["time"]
     balance = request.form["balance"]
     # include is either "YES" or "NO"
     include = request.form['includeExpense']
-    expenses = user["total_expense"]
     if include == "YES":
         response = model.calc_saving(income, goal, time, balance, expenses)
     else:
@@ -188,7 +189,8 @@ def saving():
     ]
     for change in changes:
         users.update_one(myquery, change)
-    return render_template("profile.html", time=datetime.now())
+    # return redirect(url_for('profile'))
+    return "<a href='/profile'>redirect to profile</a>"
 
 
 @app.route("/for_expenses", methods=["POST", "GET"])

@@ -22,49 +22,48 @@
                 {% endif %}
             </div>
         </nav>
-
         <br>
 
         <div class= "container">
-
-        <div class = "row">
-            <div class="vertical-menu col-md-4 offset-md-1">
-                <a href="/profile">Profile</a>
-                <a href="/calculator">Savings Calculator</a>
-                <a href="/expenses_form">Submit Monthly Expenses</a>
-                <a href="/expenses_table" class="active">View Monthly Expenses</a>
+            <div class = "row">
+                <!-- Menu -->
+                <div class="vertical-menu col-md-4 offset-md-1">
+                    <a href="/profile">Profile</a>
+                    <a href="/calculator">Savings Calculator</a>
+                    <a href="/expenses_form">Submit Monthly Expenses</a>
+                    <a href="/expenses_table" class="active">View Monthly Expenses</a>
+                </div>
+                
+                <!-- Table -->
+                <div class = "col-md-5 offset-md-1 form-design">
+                    <table class="table table-light">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Expense</th>
+                                <th scope="col">Cost</th>
+                                <th scope="col">% of total expenses</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in items %}
+                            <tr style="text-align: center">
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{item}}</td>
+                                <td>${{prices[loop.index-1]}}</td>
+                                <td> ~ {{(prices[loop.index-1] / total_expense * 10000) |round / 100}} %</td>
+                            </tr>
+                            {% endfor %}
+                            <tr style="text-align: center">
+                                <th scope="row">total</th>
+                                <td></td>
+                                <td>${{total_expense}}</td>
+                                <td>100 %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            
-            <div class = "col-md-5 offset-md-1 form-design">
-                <table class="table table-light">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Expense</th>
-                            <th scope="col">Cost</th>
-                            <th scope="col">% of total expenses</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in items %}
-                        <tr style="text-align: center">
-                            <th scope="row">{{loop.index}}</th>
-                            <td>{{item}}</td>
-                            <td>${{prices[loop.index-1]}}</td>
-                            <td> ~ {{(prices[loop.index-1] / total_expense * 10000) |round / 100}} %</td>
-                        </tr>
-                        {% endfor %}
-                        <tr style="text-align: center">
-                            <th scope="row">total</th>
-                            <td></td>
-                            <td>${{total_expense}}</td>
-                            <td>100 %</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
         </div>
     </body>
-
-    </html>
+</html>
