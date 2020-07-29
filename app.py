@@ -58,7 +58,14 @@ def expenses_form():
 
 @app.route("/expenses_table")
 def expenses_table():
-    return render_template("expenses-table.html", time=datetime.now())
+    users = mongo.db.users
+    user = users.find({"username":session["username"]})
+    user = list(user)[0]
+    expense = user["expense"]
+    items = list(expense.keys())
+    prices = list(expense.values())
+    print(prices, items)
+    return render_template("expenses-table.html", prices=prices, items=items, time=datetime.now())
 
 
 # AUTHENTICATION PROCESS
