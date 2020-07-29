@@ -24,14 +24,25 @@
         </nav>
 
         <br>
-
+        <div class= "container">
         <div class = "row">
-            <div class="vertical-menu col-md-3 offset-md-1">
+            <div class="vertical-menu col-md-4 offset-md-1">
                 <a href="/profile" class="active">Profile</a>
                 <a href="/calculator">Savings Calculator</a>
                 <a href="/expenses_form">Submit Monthly Expenses</a>
                 <a href="/expenses_table">View Monthly Expenses</a>
             </div>
+            <div class = "col-md-5 form-design offset-md-1">
+                {%if response%}
+                
+                <p>Your income: {{response.income}}</p>
+                <p>Your savings goal: {{response.goal}}</p>
+                <p>Your current savings balance: {{response.balance}}</p>
+                <p>You wanted to save for: {{response.time}} years</p>
+                <p>Based on the provided information, {{response.result}}</p>
+                {%endif%}
+            </div>
+        </div>
         </div>
     </body>
 

@@ -24,16 +24,16 @@
         </nav>
 
         <br>
-
+        <div class= "container">
         <div class = "row">
-            <div class="vertical-menu col-md-3 offset-md-1">
+            <div class="vertical-menu col-md-4 offset-md-1">
                 <a href="/profile">Profile</a>
                 <a href="/calculator" class="active">Savings Calculator</a>
                 <a href="/expenses_form">Submit Monthly Expenses</a>
                 <a href="/expenses_table">View Monthly Expenses</a>
             </div>
 
-            <div class="col-8 offset-md-1 col-md-4 form-design">
+            <div class="offset-md-1 col-md-5 form-design">
                 {% if session["error"] %}
                     <code><small>{{session["error"]}}</small></code>
                 {% endif %}
@@ -71,6 +71,7 @@
                 <p>{{response}}</p>
             </div>
 
+        </div>
         </div>
     </body>
 

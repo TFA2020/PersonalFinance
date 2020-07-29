@@ -26,6 +26,8 @@ MONGO_CLUSTER = os.environ['MONGO_CLUSTER']
 app.config['MONGO_URI'] = f'mongodb+srv://{MONGO_USER}:{MONGO_PW}@{MONGO_CLUSTER}.mongodb.net/finance?retryWrites=true&w=majority'
 mongo = PyMongo(app)
 
+users = mongo.db.users
+
 # -- Routes section --
 # HTML PAGE ROUTES
 
@@ -43,7 +45,24 @@ def login():
 
 @app.route('/profile')
 def profile():
-    return render_template("profile.html", time=datetime.now())
+    user = list(users.find({"username": session["username"]}))[0]
+    if user["submit"]:
+        income = user["income"]
+        goal = user["Savings Goal"]
+        result = user["response"]
+        balance = user["Current Saving Balance"]
+        time = user["time"]
+        saving_response = {
+            "income":income,
+            "goal": goal,
+            "result": result,
+            "balance": balance,
+            "time":time
+        }
+        print(saving_response)
+        return render_template("profile.html", response=saving_response, time=datetime.now())
+    else:
+        return render_template("profile.html", time=datetime.now())
 
 
 @app.route("/calculator")
@@ -99,7 +118,7 @@ def register():
             # return redirect('/')
         if password == request.form["confirm"]: 
             password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-            users.insert({"username": username, "password": password, "email": email, "expense":{}, "total_expense" : 0})
+            users.insert({"username": username, "password": password, "email": email, "expense":{}, "total_expense" : 0, "submit": False})
             session["username"] = username
             return "<a href='/login'>redirect to login</a>"
             # return redirect(url_for("login"))
@@ -145,6 +164,7 @@ def saving():
     # print(dict(request.form))
     users = mongo.db.users
     user = list(users.find({"username" : session["username"]}))[0]
+
     income = request.form["income"]
     goal = request.form["goal"]
     time = request.form["time"]
@@ -163,7 +183,8 @@ def saving():
         {"$set": {"time": time}},
         {"$set": {"response": response}},
         {"$set": {"Current Saving Balance": balance}},
-        {"$set": {"Savings Goal": goal}}
+        {"$set": {"Savings Goal": goal}},
+        {"$set": {"submit": True}}
     ]
     for change in changes:
         users.update_one(myquery, change)
