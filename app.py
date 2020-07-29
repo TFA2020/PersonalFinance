@@ -86,7 +86,7 @@ def register():
             # return redirect('/')
         if password == request.form["confirm"]: 
             password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
-            users.insert({"username": username, "password": password, "email": email, "item":{}, "total_expense" : 0})
+            users.insert({"username": username, "password": password, "email": email, "expense":{}, "total_expense" : 0})
             session["username"] = username
             return "<a href='/login'>redirect to login</a>"
             # return redirect(url_for("login"))
@@ -138,15 +138,18 @@ def saving():
 
 @app.route("/for_expenses", methods=["POST", "GET"])
 def for_expense():
-    response = dict(request.form)
+    response = list(dict(request.form).values())
     items = {}
     users = mongo.db.users
-    for i in range(1, int(len(response)/2+1)):
-        item = request.form["item"+str(i)]
-        price = float(request.form["price"+str(i)])
+    # https://repl.it/repls/LastDimpledOrganization
+    for i in range(0, len(response), 2):
+        item = response[i]
+        price = float(response[i+1])
         items[item] = price
     myquery = {"username": session['username']}
-    newvalues = {"$set": {"item": items}}
-    users.update_one(myquery, newvalues)
+    newItems = {"$set": {"expense": items}}
+    newExpenseTotal = {"$set": {"total_expense": sum(items.values())}}
+    users.update_one(myquery, newItems)
+    users.update_one(myquery, newExpenseTotal)
     # return redirect(url_for('expense_table'))
-    return "<a href='/expense_table'>redirect to expense table</a>"
+    return "<a href='/expenses_table'>redirect to expense table</a>"
