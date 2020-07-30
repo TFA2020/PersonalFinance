@@ -52,7 +52,7 @@ def logout():
 
 
 @app.route('/AccessDenied')
-def denied():
+def AccessDenied():
     return "You do not have the permission to visit the page specified."
 
 
@@ -138,7 +138,7 @@ def profile():
         else:
             return render_template("profile.html", time=datetime.now())
     except KeyError:
-        return redirect(url_for('AcessDenied'))
+        return redirect(url_for('AccessDenied'))
 
 
 @app.route("/calculator")
@@ -147,7 +147,7 @@ def calculator():
         username = session["username"]
         return render_template("calculator.html", time=datetime.now())
     except KeyError:
-        return redirect(url_for('AcessDenied'))
+        return redirect(url_for('AccessDenied'))
 
 
 @app.route("/expenses_form")
@@ -156,7 +156,7 @@ def expenses_form():
         username = session["username"]
         return render_template("expenses-form.html", time=datetime.now())
     except KeyError:
-        return redirect(url_for('AcessDenied'))
+        return redirect(url_for('AccessDenied'))
 
 
 @app.route("/expenses_table")
@@ -174,7 +174,7 @@ def expenses_table():
         # print(prices, items)
         return render_template("expenses-table.html", prices=prices, items=items, total_expense= total, time=datetime.now())
     except KeyError:
-        return redirect(url_for('AcessDenied'))
+        return redirect(url_for('AccessDenied'))
 
 
 @app.route("/savings", methods=["POST", "GET"])
