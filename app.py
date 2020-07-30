@@ -81,7 +81,7 @@ def register():
             password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
             users.insert({"username": username, "password": password, "email": email, "expense":{}, "total_expense" : 0, "submit": False})
             session["username"] = username
-            return redirect(url_for("login"))
+            return redirect(url_for("profile"))
 
         session["error"] = "passwords do not match"
         return redirect('/')
