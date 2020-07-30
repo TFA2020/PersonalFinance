@@ -21,7 +21,7 @@ def calc_saving(income, goal, time, balance=0, expenses=0):
             # format all the numbers to include 2 decimal places and commas if necessary
             max_saved = '{0:,.2f}'.format(round(income*time*12, 2))
             goal = '{0:,.2f}'.format(round(goal,2))
-            return f'if you save all of your income, you will be able to save up to {saved_percent}% or ${max_saved} of ${}'
+            return f'if you save all of your income, you will be able to save up to {saved_percent}% or ${max_saved} of ${goal}'
         else:
             # '{0:,.2f}'.format(value) = 2 decimal places and commas for every 4th digit "1,000"
             monthly_goal = '{0:,.2f}'.format(round(goal/time/12, 2))
