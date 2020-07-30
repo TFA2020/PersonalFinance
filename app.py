@@ -168,10 +168,18 @@ def expenses_table():
         # retrieve data from mongo
         expense = user["expense"]
         total = user["total_expense"]
-        # separate expense dictionary into two lists
-        items = list(expense.keys())
-        prices = list(expense.values())
-        # print(prices, items)
+        # sort expense dictionary according to cost, in descending order (greatest to least)
+        # the sorted result is a list => so we will make a dictionary
+        expense = sorted(expense.items(), key=lambda x: x[1], reverse=True)
+        # our dictionary
+        expenses = {}
+        # loop through all the items and save the item name and item cost
+        for item in expense:
+            expenses[item[0]] = item[1]
+        # save all items into one list, all corresponding prices into another
+        items = list(expenses.keys())
+        prices = list(expenses.values())
+        # return both lists to the table
         return render_template("expenses-table.html", prices=prices, items=items, total_expense= total, time=datetime.now())
     except KeyError:
         return redirect(url_for('AccessDenied'))

@@ -28,9 +28,9 @@
         <div class = "row">
             <div class="vertical-menu col-md-4 offset-md-1">
                 <a href="/profile" class="active">Profile</a>
-                <a href="/calculator">Savings Calculator</a>
                 <a href="/expenses_form">Submit Monthly Expenses</a>
                 <a href="/expenses_table">View Monthly Expenses</a>
+                <a href="/calculator">Savings Calculator</a>
             </div>
             <div class = "col-md-5 form-design offset-md-1">
                 <h5>Hello, {{session["username"]}}</h5>
@@ -43,7 +43,8 @@
                     <strong><p>Based on the provided information, {{response.result}}</p></strong>
                 {% else %}
                     <p>Want to calculate your monthly savings and allowance ?</p>
-                    <p>Click <a href='/calculator'>here</a> or select the Savings Calculator from the menu</p>
+                    <p>First : Submit your monthly expenses <a href='/expenses_form'>here</a> or select the <strong>Submit Monthly Expenses</strong> option from the menu</p>
+                    <p>Then : Click <a href='/calculator'>here</a> or select the <strong>Savings Calculator</strong> option from the menu</p>
                 {% endif %}
 
             </div>
