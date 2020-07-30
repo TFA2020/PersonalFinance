@@ -231,7 +231,7 @@ def for_expenses():
         newExpenseTotal = {"$set": {"total_expense": round(sum(items.values()), 2)}}
         users.update_one(myquery, newItems)
         users.update_one(myquery, newExpenseTotal)
-        return redirect(url_for('expense_table'))
+        return redirect(url_for('expenses_table'))
     else:
         return redirect('/')
 
