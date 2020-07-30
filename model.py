@@ -25,5 +25,5 @@ def calc_saving(income, goal, time, balance=0, expenses=0):
         else:
             # '{0:,.2f}'.format(value) = 2 decimal places and commas for every 4th digit "1,000"
             monthly_goal = '{0:,.2f}'.format(round(goal/time/12, 2))
-            allowance = '{0:,.2f}'.format(round(income-monthly_goal,2))
+            allowance = '{0:,.2f}'.format(round(income-round(goal/time/12, 2),2))
             return f'for each of the {time * 12} months you will be saving for, you need to save ${monthly_goal} and you can spend ${allowance}'
