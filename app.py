@@ -131,7 +131,7 @@ def profile():
                 "result": result,
                 "balance": balance,
                 "time": time,
-                "expenses": expenses
+                "expenses": '{0:,.2f}'.format(expenses)
             }
             # print(saving_response)
             return render_template("profile.html", response=saving_response, time=datetime.now())
