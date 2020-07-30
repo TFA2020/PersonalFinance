@@ -14,7 +14,7 @@ import os
 # -- Initialization section --
 app = Flask(__name__)
 
-app.secret_key = os.urandom(32)
+app.secret_key = "personal-finance-planner-deployment"
 
 # name of database
 app.config['MONGO_DBNAME'] = 'finance'
