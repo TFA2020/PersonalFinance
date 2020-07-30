@@ -38,10 +38,6 @@
 
                 <!-- Form -->
                 <div class="col-md-5 offset-md-1 form-design">
-                    {% if session["error"] %}
-                        <code><small>{{session["error"]}}</small></code>
-                    {% endif %}
-
                     <form action="/for_expenses" method="POST">
                         <button type="button" id="addExpense"  class="btn btn-primary">Add Expense</button>
                         <button type="submit" class="btn btn-primary">Submit</button>

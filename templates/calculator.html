@@ -37,9 +37,6 @@
 
                 <!-- Forms -->
                 <div class="offset-md-1 col-md-5 form-design">
-                    {% if session["error"] %}
-                        <code><small>{{session["error"]}}</small></code>
-                    {% endif %}
                     <form action="/savings" method="POST">
                         <div class="form-group">
                             <label for="income">Monthly Income</label>
@@ -53,7 +50,7 @@
                         </div>
                         <div class="form-group">
                             <label for="time">How long do you want to save for</label>
-                            <input type="number" class="form-control" aria-describedby="pwHelp" name="time" step=1 min=0 required>
+                            <input type="number" class="form-control" aria-describedby="pwHelp" name="time" step=0.25 min=0.25 required>
                             <small id="pwHelp" class="form-text text-muted">answer in terms of years</small>
                         </div>
                         <div class="form-group">
